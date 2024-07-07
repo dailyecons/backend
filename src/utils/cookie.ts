@@ -14,11 +14,8 @@ const buf = Buffer.alloc(64);
   await res.promise;
 }
 
-// Setup a HMAC instance 
-const hmac = crypto.createHmac('sha256', buf);
-
 export function sign(value: string) {
-  return `${value}.${hmac.update(value).digest('base64url')}`;
+  return `${value}.${crypto.createHmac('sha256', buf).update(value).digest('base64url')}`;
 }
 
 export function unsign(value: string) {

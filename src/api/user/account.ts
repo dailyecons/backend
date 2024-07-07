@@ -19,5 +19,5 @@ export default new Byte()
       ctx.status = 404;
     }
 
-    return ctx.body(null);
+    return ctx.end();
   });

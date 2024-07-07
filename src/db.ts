@@ -29,12 +29,11 @@ await db.executeMultiple(`
     readTimeApproximation INTEGER NOT NULL,
 
     bannerLink TEXT NOT NULL,
-    avatarLink TEXT NOT NULL,
 
     views INTEGER DEFAULT 0 NOT NULL,
 
-    FOREIGN KEY (author, avatarLink)
-      REFERENCES admins (name, avatarLink)
+    FOREIGN KEY (author)
+      REFERENCES admins (name)
   );
 `);
 

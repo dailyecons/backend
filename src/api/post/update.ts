@@ -21,7 +21,7 @@ export default new Byte()
       ctx.status = 404;
     }
 
-    return ctx.body(null);
+    return ctx.end();
   })
 
   // Set title 
@@ -38,7 +38,7 @@ export default new Byte()
       ctx.status = 404;
     }
 
-    return ctx.body(null);
+    return ctx.end();
   })
 
   // Set banner image link
@@ -55,5 +55,5 @@ export default new Byte()
       ctx.status = 404;
     }
 
-    return ctx.body(null);
+    return ctx.end();
   });

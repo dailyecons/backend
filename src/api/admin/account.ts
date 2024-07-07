@@ -12,14 +12,13 @@ export default new Byte()
     const data = await parseForm(ctx);
     if (data === null) {
       ctx.status = 404;
-      return ctx.body(null);
+      return ctx.end();
     }
 
     return data;
   })
 
   .post('/login', async (ctx) => {
-    // TODO: Make set cookie actually works
     try {
       const { name, password } = ctx.credentials;
       const hashedPassword = (await db.execute({
@@ -29,10 +28,10 @@ export default new Byte()
 
       if (typeof hashedPassword === 'string' && await Bun.password.verify(password, hashedPassword)) {
         ctx.headers.push(['Set-Cookie', serializeSign(name)]);
-        return ctx.body(null);
+        return ctx.end();
       }
     } catch (e) { }
 
     ctx.status = 404;
-    return ctx.body(null);
-  })
+    return ctx.end();
+  });

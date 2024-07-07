@@ -13,43 +13,24 @@ const parseForm = form.schema({
 export default new Byte()
   // Parse credentials
   .state('admin', parseUnsign)
-  .state('avatarLink', async (ctx) => {
-    try {
-      const avatarLink = (await db.execute({
-        sql: 'SELECT avatarLink FROM admins WHERE name = ?',
-        args: [ctx.admin]
-      })).rows[0]?.[0];
-
-      if (typeof avatarLink === 'string') return avatarLink;
-    } catch (e) { }
-
-    ctx.status = 404;
-    return ctx.body(null);
-  })
-
-  // Parse form data data
-  .state('post', async (ctx) => {
-    const data = await parseForm(ctx);
-    if (data === null) {
-      ctx.status = 404;
-      return ctx.body(null);
-    }
-
-    return data;
-  })
 
   // Main handling
   .post('/', async (ctx) => {
     try {
-      const { post } = ctx;
+      const post = await parseForm(ctx);
 
-      await db.execute({
-        sql: 'INSERT INTO posts (title, content, readTimeApproximation, date, bannerLink, author, avatarLink) VALUES (?, ?, ?, ?, ?, ?, ?)',
-        args: [post.title, post.content, readTime(post.content), currentDate(), post.bannerLink, ctx.admin, ctx.avatarLink]
-      });
+      if (post !== null) {
+        await db.execute({
+          sql: 'INSERT INTO posts (title, content, readTimeApproximation, date, bannerLink, author) VALUES (?, ?, ?, ?, ?, ?)',
+          args: [post.title, post.content, readTime(post.content), currentDate(), post.bannerLink, ctx.admin]
+        });
+
+        return ctx.end();
+      }
     } catch (e) {
-      ctx.status = 404;
+      console.log(e);
     }
 
-    return ctx.body(null);
+    ctx.status = 404;
+    return ctx.end();
   });
