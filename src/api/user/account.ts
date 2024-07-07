@@ -1,4 +1,4 @@
-import { Byte } from '@bit-js/byte';
+import { Byte, serialize } from '@bit-js/byte';
 import db from '@db';
 
 export default new Byte()
@@ -12,11 +12,11 @@ export default new Byte()
       });
 
       if (result.rows.length === 0)
-        ctx.status = 403;
+        ctx.status = 404;
       else
-        ctx.headers.push(['Set-Cookie', `token=${username}; HttpOnly`]);
+        ctx.headers.push(['Set-Cookie', serialize(username)]);
     } catch (e) {
-      ctx.status = 403;
+      ctx.status = 404;
     }
 
     return ctx.body(null);

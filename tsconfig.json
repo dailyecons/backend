@@ -27,6 +27,9 @@
     "paths": {
       "@db": [
         "./src/db.ts"
+      ],
+      "@utils/*": [
+        "./src/utils/*"
       ]
     }
   }

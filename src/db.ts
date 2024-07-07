@@ -1,11 +1,13 @@
 import { createClient } from '@libsql/client';
 
 const db = createClient({
+  // eslint-disable-next-line
   url: process.env.DB_URL!,
+  // eslint-disable-next-line
   authToken: process.env.DB_AUTH_TOKEN!,
 });
 
-db.executeMultiple(`
+await db.executeMultiple(`
   CREATE TABLE IF NOT EXISTS users (
     name TEXT PRIMARY KEY,
     theme INTEGER DEFAULT 0 NOT NULL
@@ -13,33 +15,27 @@ db.executeMultiple(`
 
   CREATE TABLE IF NOT EXISTS admins (
     name TEXT PRIMARY KEY,
-    password TEXT NOT NULL
+    password TEXT NOT NULL,
+    avatarLink TEXT NOT NULL
   );
 
   CREATE TABLE IF NOT EXISTS posts (
-    title TEXT PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT,
     content TEXT NOT NULL,
     date TEXT NOT NULL,
     author TEXT NOT NULL,
 
     readTimeApproximation INTEGER NOT NULL,
 
-    bannerImageLink TEXT NOT NULL,
+    bannerLink TEXT NOT NULL,
     avatarLink TEXT NOT NULL,
 
     views INTEGER DEFAULT 0 NOT NULL,
 
-    FOREIGN KEY (author)
-      REFERENCES admins (name)
+    FOREIGN KEY (author, avatarLink)
+      REFERENCES admins (name, avatarLink)
   );
-
-  CREATE TABLE IF NOT EXISTS comments (
-    content TEXT NOT NULL,
-    user TEXT NOT NULL,
-
-    FOREIGN KEY (user)
-      REFERENCES users (name) 
-  )
 `);
 
 export default db;

@@ -1,4 +1,7 @@
 import { Byte } from '@bit-js/byte';
 import api from './api';
 
-export default Byte.route('/api', api);
+const app = new Byte()
+  .route('/api', api);
+
+export default app;
