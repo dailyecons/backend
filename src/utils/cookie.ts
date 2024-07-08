@@ -1,18 +1,6 @@
 import crypto from 'node:crypto';
 
-const buf = Buffer.alloc(64);
-
-// Load the buffer with random values
-{
-  const res = Promise.withResolvers();
-
-  crypto.randomFill(buf, (err) => {
-    if (err === null) res.resolve();
-    else res.reject(err);
-  });
-
-  await res.promise;
-}
+const buf = crypto.randomBytes(64);
 
 export function sign(value: string) {
   return `${value}.${crypto.createHmac('sha256', buf).update(value).digest('base64url')}`;
