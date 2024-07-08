@@ -1,5 +1,5 @@
 import { Byte } from '@bit-js/byte';
-import { sign, unsign } from './cookie';
+import signer from './cookie';
 
 // Parse a cookie token
 export const parse = Byte.handle((ctx) => {
@@ -25,7 +25,7 @@ export const parseUnsign = Byte.handle((ctx) => {
     const startIdx = cookie.indexOf('token=') + 6;
     if (startIdx !== 5) {
       const endIdx = cookie.indexOf(';', startIdx);
-      const originalValue = unsign(endIdx === -1 ? cookie.substring(startIdx) : cookie.substring(startIdx, endIdx));
+      const originalValue = signer.unsign(endIdx === -1 ? cookie.substring(startIdx) : cookie.substring(startIdx, endIdx));
 
       if (originalValue !== null) return originalValue;
     }
@@ -40,5 +40,5 @@ export function serialize(token: string) {
 }
 
 export function serializeSign(token: string) {
-  return `token=${sign(token)}; HttpOnly`;
+  return `token=${signer.sign(token)}; HttpOnly`;
 }

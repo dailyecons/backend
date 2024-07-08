@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@bit-js/byte": "^2.0.0-alpha.2",
+    "@bit-js/ncrypt": "^0.0.3",
     "@bit-js/valify": "^0.0.1",
     "@bit-js/web-utils": "^1.1.3",
     "@libsql/client": "^0.7.0"
