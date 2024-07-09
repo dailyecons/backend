@@ -27,9 +27,7 @@ export default new Byte()
 
         return ctx.end();
       }
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) { }
 
     ctx.status = 404;
     return ctx.end();

@@ -2,6 +2,7 @@ import createPost from '@api/post/create';
 import getAdminToken from './getAdminToken';
 
 const headers = { Cookie: await getAdminToken() };
+console.log(headers);
 
 const body = new FormData();
 body.append('title', prompt('Post title:')!);

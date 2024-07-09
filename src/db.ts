@@ -11,16 +11,15 @@ await db.executeMultiple(`
   CREATE TABLE IF NOT EXISTS users (
     name TEXT PRIMARY KEY,
     theme INTEGER DEFAULT 0 NOT NULL
-  );
+  ) WITHOUT ROWID;
 
   CREATE TABLE IF NOT EXISTS admins (
     name TEXT PRIMARY KEY,
     password TEXT NOT NULL,
     avatarLink TEXT NOT NULL
-  );
+  ) WITHOUT ROWID;
 
   CREATE TABLE IF NOT EXISTS posts (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT,
     content TEXT NOT NULL,
     date TEXT NOT NULL,
