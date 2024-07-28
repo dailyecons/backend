@@ -1,4 +1,4 @@
-import { Byte, form } from '@bit-js/byte';
+import { Byte, cors, form } from '@bit-js/byte';
 import db from '@db';
 import { serializeSign } from '@utils/token';
 
@@ -8,6 +8,8 @@ const parseForm = form.schema({
 });
 
 export default new Byte()
+  .use(cors({ allowCredentials: true }))
+
   .state('credentials', async (ctx) => {
     const data = await parseForm(ctx);
     if (data === null) {
