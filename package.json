@@ -7,7 +7,7 @@
     "typescript": "latest"
   },
   "dependencies": {
-    "@bit-js/byte": "^2.0.0-alpha.8",
+    "@bit-js/byte": "^2.0.0-alpha.9",
     "@bit-js/ncrypt": "^0.0.4",
     "@bit-js/valify": "^0.0.1",
     "@bit-js/web-utils": "^1.1.3",
