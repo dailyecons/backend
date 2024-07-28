@@ -40,9 +40,9 @@ export const parseUnsign = Byte.handle((ctx) => {
 });
 
 export function serialize(token: string) {
-  return `token=${token}; HttpOnly`;
+  return `token=${token}`;
 }
 
 export function serializeSign(token: string) {
-  return `token=${signer.sign(token)}; HttpOnly`;
+  return `token=${signer.sign(token)}`;
 }
