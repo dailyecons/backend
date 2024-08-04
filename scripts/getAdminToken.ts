@@ -9,5 +9,5 @@ export default async function getAdminToken() {
   const res = await adminAccount.client().post('/login', { body });
   if (!res.ok) throw new Error(Bun.inspect(res));
 
-  return res.headers.getSetCookie()[0];
+  return await res.text();
 }

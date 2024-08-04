@@ -1,7 +1,7 @@
 import createPost from '@api/post/create';
 import getAdminToken from './getAdminToken';
 
-const headers = { Cookie: await getAdminToken() };
+const headers = { Authorization: await getAdminToken() };
 console.log(headers);
 
 const body = new FormData();
