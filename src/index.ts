@@ -2,7 +2,9 @@ import { Byte, cors, send } from '@bit-js/byte';
 import api from './api';
 
 const app = new Byte()
-  .prepare(cors())
+  .prepare(cors({
+    allowOrigin: process.env.NODE_ENV === 'production' ? 'https://dailyecons.pages.dev' : 'http://localhost:4321'
+  }))
   .get('/', send.body('This is the backend of Dailyecons'))
   .route('/api', api);
 
