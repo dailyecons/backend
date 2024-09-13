@@ -10,7 +10,8 @@ const db = createClient({
 await db.executeMultiple(`
   CREATE TABLE IF NOT EXISTS users (
     name TEXT PRIMARY KEY,
-    theme INTEGER DEFAULT 0 NOT NULL
+    theme INTEGER DEFAULT 0 NOT NULL,
+    points INTEGER DEFAULT 0 NOT NULL
   ) WITHOUT ROWID;
 
   CREATE TABLE IF NOT EXISTS admins (
@@ -33,6 +34,32 @@ await db.executeMultiple(`
 
     FOREIGN KEY (author)
       REFERENCES admins (name)
+  );
+
+  CREATE TABLE IF NOT EXISTS themes (
+    name TEXT PRIMARY KEY,
+    description TEXT NOT NULL
+  ) WITHOUT ROWID;
+
+  CREATE TABLE IF NOT EXISTS questions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    theme TEXT NOT NULL,
+    content TEXT NOT NULL,
+    author TEXT NOT NULL,
+
+    FOREIGN KEY (author)
+      REFERENCES admins (name),
+
+    FOREIGN KEY (theme)
+      REFERENCES themes (name)
+  );
+
+  CREATE TABLE IF NOT EXISTS answers (
+    question INTEGER,
+    content TEXT NOT NULL,
+    
+    FOREIGN KEY (question)
+      REFERENCES questions (id)
   );
 `);
 
