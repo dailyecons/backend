@@ -14,7 +14,7 @@ export const parseUnsign = Byte.handle((ctx) => {
     if (originalValue !== null) return originalValue;
   }
 
-  ctx.status = 404;
+  ctx.status = 401;
   return ctx.end();
 });
 
