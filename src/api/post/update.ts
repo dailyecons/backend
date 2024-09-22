@@ -14,12 +14,11 @@ export default new Byte()
 
       // Ensure when one author is somehow compromised the hacker can only modify their post
       await db.execute({
-        sql: 'UPDATE posts SET content = ?, readTimeApproximation = ? WHERE id = ? AND author = ?',
+        sql: 'UPDATE posts SET content = ?, readTimeApproximation = ? WHERE rowid = ? AND author = ?',
         args: [content, readTime(content), id, ctx.admin]
       });
     } catch (err) {
       ctx.status = 404;
-      console.log(err);
     }
 
     return ctx.end();
@@ -32,7 +31,7 @@ export default new Byte()
       const title = await ctx.req.text();
 
       await db.execute({
-        sql: 'UPDATE posts SET title = ? WHERE id = ? AND author = ?',
+        sql: 'UPDATE posts SET title = ? WHERE rowid = ? AND author = ?',
         args: [title, id, ctx.admin]
       });
     } catch (err) {
@@ -49,7 +48,7 @@ export default new Byte()
       const link = await ctx.req.text();
 
       await db.execute({
-        sql: 'UPDATE posts SET bannerImageLink = ? WHERE id = ? AND author = ?',
+        sql: 'UPDATE posts SET bannerImageLink = ? WHERE rowid = ? AND author = ?',
         args: [link, id, ctx.admin]
       });
     } catch (err) {
