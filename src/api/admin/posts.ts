@@ -12,7 +12,7 @@ export default new Byte()
           args: [ctx.admin]
         })).rows
       );
-    } catch (e) {
+    } catch {
       ctx.status = 500;
     }
 

@@ -19,6 +19,7 @@ export default new Byte()
       });
     } catch (err) {
       ctx.status = 404;
+      console.log(err);
     }
 
     return ctx.end();

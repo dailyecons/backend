@@ -55,12 +55,25 @@ await db.executeMultiple(`
   );
 
   CREATE TABLE IF NOT EXISTS answers (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     question INTEGER,
     content TEXT NOT NULL,
     
     FOREIGN KEY (question)
       REFERENCES questions (id)
   );
+
+  CREATE TABLE IF NOT EXISTS explanations (
+    question INTEGER,
+    answer INTEGER,
+    content TEXT NOT NULL,
+
+    FOREIGN KEY (question)
+      REFERENCES questions (id),
+
+    FOREIGN KEY (answer)
+      REFERENCES answers (id)
+  )
 `);
 
 export default db;
