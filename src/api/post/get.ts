@@ -17,11 +17,11 @@ export default new Byte()
         if (limit > 0 && limit < 30)
           return ctx.json(startID === -1
             ? (await db.execute({
-              sql: 'SELECT rowid as id, title, content, date, author, readTimeApproximation, bannerLink, avatarLink, views FROM posts INNER JOIN admins ON posts.author = admins.name ORDER BY rowid DESC LIMIT ?',
+              sql: 'SELECT rowid as id, title, content, date, admins.display as author, readTimeApproximation, bannerLink, avatarLink, views FROM posts INNER JOIN admins ON posts.author = admins.name ORDER BY rowid DESC LIMIT ?',
               args: [limit]
             })).rows
             : (await db.execute({
-              sql: 'SELECT rowid as id, title, content, date, author, readTimeApproximation, bannerLink, avatarLink, views FROM posts INNER JOIN admins ON posts.author = admins.name WHERE rowid < ? ORDER BY rowid DESC LIMIT ?',
+              sql: 'SELECT rowid as id, title, content, date, admins.display as author, readTimeApproximation, bannerLink, avatarLink, views FROM posts INNER JOIN admins ON posts.author = admins.name WHERE rowid < ? ORDER BY rowid DESC LIMIT ?',
               args: [startID, limit]
             })).rows
           );
@@ -38,7 +38,7 @@ export default new Byte()
   .get('/:id', async (ctx) => {
     try {
       const posts = (await db.execute({
-        sql: 'SELECT title, content, date, author, readTimeApproximation, bannerLink, avatarLink, views FROM posts INNER JOIN admins ON posts.author = admins.name WHERE posts.rowid = ? LIMIT 1',
+        sql: 'SELECT title, content, date, admins.display as author, readTimeApproximation, bannerLink, avatarLink, views FROM posts INNER JOIN admins ON posts.author = admins.name WHERE posts.rowid = ? LIMIT 1',
         args: [ctx.params.id]
       })).rows;
 
