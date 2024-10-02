@@ -1,6 +1,7 @@
 import { Byte } from '@bit-js/byte';
 import create from './create';
 import db from '@db';
+import questions from './questions';
 
 export default new Byte()
   .get('/', async (ctx) => {
@@ -13,4 +14,5 @@ export default new Byte()
       return ctx.end();
     }
   })
+  .route('/questions', questions)
   .route('/create', create);
