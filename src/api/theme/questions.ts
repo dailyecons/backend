@@ -4,8 +4,9 @@ import db from '@db';
 export default new Byte()
   .get('/:theme', async (ctx) => {
     try {
-      return (await db.execute({
-        sql: `SELECT 
+      return ctx.json(
+        (await db.execute({
+          sql: `SELECT 
           q.id AS question_id,
           q.content AS question_content,
           a.id AS answer_id,
@@ -19,7 +20,11 @@ export default new Byte()
           explanations e ON q.id = e.question AND a.id = e.answer
         WHERE 
           q.theme = ?`,
-        args: [ctx.params.theme]
-      })).rows
-    } catch { }
+          args: [ctx.params.theme]
+        })).rows
+      );
+    } catch {
+      ctx.status = 500;
+      return ctx.end();
+    }
   });
